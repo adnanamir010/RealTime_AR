@@ -1,0 +1,3 @@
+E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug/CMakeFiles/Project4.dir
+E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug/CMakeFiles/edit_cache.dir
+E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
