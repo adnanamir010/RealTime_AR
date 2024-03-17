@@ -30,13 +30,19 @@ bool getChessboardCorners(Mat &src, vector<Point2f> &corners, Size targetSize) {
     return foundCorners;
 }
 
-bool getArucoCorners(Mat &src, vector<Point2f> &corners) {
-    corners.resize(35, Point2f(0, 0));
-    vector<int> markerIds;
-    vector<std::vector<cv::Point2f>> markerCorners, rejectedCandidates;
-    Ptr<cv::aruco::DetectorParameters> parameters = aruco::DetectorParameters::create();
-    Ptr<cv::aruco::Dictionary> dictionary = aruco::getPredefinedDictionary(aruco::DICT_6X6_250);
-    aruco::detectMarkers(src, dictionary, markerCorners, markerIds, parameters, rejectedCandidates);
+bool getArucoCorners(cv::Mat& src, std::vector<cv::Point2f>& corners) {
+    // Clear previous data
+    corners.resize(35,Point2f(0,0));
+
+    // Marker detection variables
+    cv::aruco::Dictionary dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
+    std::vector<int> markerIds;
+    std::vector<std::vector<cv::Point2f>> markerCorners, rejectedCandidates;
+    cv::aruco::DetectorParameters parameters = cv::aruco::DetectorParameters();
+    cv::aruco::ArucoDetector detector(dictionary,parameters);
+
+    // Detect markers
+    detector.detectMarkers(src,markerCorners,markerIds,rejectedCandidates);
 
     for (int i = 0; i < markerIds.size(); i++) {
         int idx = markerIds[i];
@@ -45,3 +51,31 @@ bool getArucoCorners(Mat &src, vector<Point2f> &corners) {
 
     return markerCorners.size() == 35; // successfully extract Aruco corners
 }
+
+//bool getArucoCorners(cv::Mat& src, std::vector<cv::Point2f>& corners) {
+//    // Clear previous data
+//    corners.clear();
+//
+//    // Marker detection variables
+//    cv::aruco::Dictionary dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
+//    std::vector<int> markerIds;
+//    std::vector<std::vector<cv::Point2f>> markerCorners, rejectedCandidates;
+//    cv::aruco::DetectorParameters parameters = cv::aruco::DetectorParameters();
+//    cv::aruco::ArucoDetector detector(dictionary,parameters);
+//
+//    // Detect markers
+//    detector.detectMarkers(src,markerCorners,markerIds,rejectedCandidates);
+//
+//    // Check if exactly 35 markers are detected
+//    if(markerIds.size() == 35) {
+//        // Extract top-left corners of the detected markers
+//        for(const auto& cornerSet : markerCorners) {
+//            if(!cornerSet.empty()) {
+//                corners.push_back(cornerSet[0]); //top-left corner
+//            }
+//        }
+//        return true; // Indicate that exactly 35 markers were detected
+//    } else {
+//        return false; // Indicate that the number of detected markers is not 35
+//    }
+//}

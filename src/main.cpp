@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
         char key = cv::waitKey(10);
 
         //get the chessboard and aruco corners
-        vector<Point2f> cbCorners,arucoCorners;
+        vector<Point2f> cbCorners,arucoCorners,markerIds;
         bool foundcb = getChessboardCorners(src,cbCorners,chessboardSize);
         bool foundAruco = getArucoCorners(src,arucoCorners);
 
@@ -87,8 +87,6 @@ int main(int argc, char *argv[]) {
             case 'c':{
                 mode = CALLIBRATION;
                 frameCount = 0;
-                cbCorners.clear();
-                arucoCorners.clear();
                 break;
             }
         };
@@ -100,13 +98,13 @@ int main(int argc, char *argv[]) {
                 }
                 if (foundAruco){
                     for (int i=0; i<arucoCorners.size();i++){
-                        circle(dst,arucoCorners[i],2,Scalar(0,0,255));
+                        circle(dst,arucoCorners[i],1,Scalar(0,0,255),5);
                     }
                 }
                 break;
             }
             case CALLIBRATION:{
-                if (frameCount <= 50){
+                if (frameCount <= 6){
 
                     if (foundcb){
                         drawChessboardCorners(dst,chessboardSize,cbCorners,foundcb);
@@ -171,13 +169,13 @@ int main(int argc, char *argv[]) {
             }
         };
         cv::namedWindow("Video", 1); // identifies a window
-//        putText(dst, //target image
-//                name, //text
-//                cv::Point(10, dst.rows / 10), //top-left position
-//                cv::FONT_HERSHEY_TRIPLEX,
-//                1.0,
-//                CV_RGB(118, 185, 0), //font color
-//                2);
+        putText(dst, //target image
+                to_string(cbCornerList.size()), //text
+                cv::Point(10, dst.rows / 10), //top-left position
+                cv::FONT_HERSHEY_TRIPLEX,
+                1.0,
+                CV_RGB(118, 185, 0), //font color
+                2);
         cv::imshow("Video", dst);
 
     }
