@@ -1,10 +1,16 @@
+/*
+ * Adnan Amir and Srijan Dokania
+ * CS 5330 PRCV
+ * Spring 2024
+ * Purpose of file: Source file for entire AR system
+ */
+
 #include <iostream>
 #include <vector>
 #include <string>
 #include <opencv2/opencv.hpp>
 #include "opencv2/aruco.hpp"
 #include "../include/utils.h"
-#include "../include/obj_utils.h"
 #include <stdio.h>
 
 using namespace std;

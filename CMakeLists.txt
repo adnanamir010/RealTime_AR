@@ -12,8 +12,6 @@ include_directories(include,
 )
 
 add_executable(Project4 src/main.cpp
-        include/obj_utils.h
-        src/obj_utils.cpp
         src/utils.cpp
         include/utils.h
 
