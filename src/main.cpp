@@ -36,18 +36,144 @@ const string menu_options[] = {
 	"Show Virtual Object",
 	"Exit"
 };
-void showCorners() {
-    // Code to show corners
+void showCorners(bool &foundcb,vector<Point2f> &cbCorners, bool &overlayFlag, Size &chessboardSize, Mat &overlay, Mat dst,
+                 bool &foundAruco, vector<Point2f> &arucoCorners, vector<Point2f> &outer4) {
+    if (foundcb) {
+        vector<Point2f> outside;
+        int idx[] = {0, 8, 45, 53};
+        for (int i: idx) {
+            outside.push_back(cbCorners[i]);
+        }
+        drawChessboardCorners(dst, chessboardSize, cbCorners, foundcb);
+        if (overlayFlag) {
+            overlayImage(overlay, dst, outside);
+        }
+    }
+    if (foundAruco){
+        for (int i=0; i<arucoCorners.size();i++){
+            circle(dst,arucoCorners[i],1,Scalar(0,0,255),5);
+        }
+        if (overlayFlag){
+            overlayImage(overlay, dst, outer4);
+        }
+    }
+    imshow("Show Corners",dst);
     cout << "Showing corners..." << endl;
 }
 
-void calibrateCam() {
+void calibrateCam(bool &foundcb,vector<Point2f> &cbCorners, bool &overlayFlag, Size &chessboardSize, Mat &overlay, Mat dst,
+                  bool &foundAruco, vector<Point2f> &arucoCorners, vector<Point2f> &outer4, int frameCount, vector<vector<Point2f>> &cbCornerList,
+                  vector<vector<Point3f>> &cbPointList, vector<Point3f> &cbPoints,vector<Point3f> &arucoPoints,vector<vector<Point3f>> &arucoPointList,
+                  vector<vector<Point2f>> &arucoCornerList, Mat &src,Mat &cbCam, Mat &arucoCam, Mat &cbDistCoeffs, Mat &arucoDistCoeffs, Mat &cbR, Mat &cbT, Mat &arucoR, Mat &arucoT,
+                  bool &cbCalibrationFlag, bool &arcuroCalibrationFlag) {
     // Code to calibrate camera
+    if (frameCount <= 6){
+
+        if (foundcb){
+            drawChessboardCorners(dst,chessboardSize,cbCorners,foundcb);
+            cbCornerList.push_back(cbCorners);
+            cbPointList.push_back(cbPoints);
+        }
+        if (foundAruco){
+            for (int i=0; i<arucoCorners.size();i++){
+                circle(dst,arucoCorners[i],2,Scalar(0,0,255));
+            }
+            arucoCornerList.push_back(arucoCorners);
+            arucoPointList.push_back(arucoPoints);
+        }
+    }
+    else{
+        mode = SHOW_CORNERS;
+        if (foundcb) {
+            double cbRepError = calibrateCamera(cbPointList, cbCornerList, Size(src.rows, src.cols),
+                                                cbCam,cbDistCoeffs, cbR, cbT);
+            cout << "Chessboard Camera Matrix" << endl;
+            mprint(cbCam);
+            cout << "Chessboard Distortion Matrix" << endl;
+            mprint(cbDistCoeffs);
+            cout << "Chessboard Reprojection Error: " << cbRepError << endl;
+            cbCalibrationFlag = true;
+            cout << "Chessboard Callibration Complete" << endl;
+
+        }
+        if (foundAruco){
+            double arucoRepError = calibrateCamera(arucoPointList,arucoCornerList,Size(src.rows,src.cols),
+                                                   arucoCam,arucoDistCoeffs,arucoR,arucoT);
+            cout << "Arucoboard Camera Matrix" << endl;
+            mprint(arucoCam);
+            cout << "Arucoboard Distortion Matrix" << endl;
+            mprint(arucoDistCoeffs);
+            cout << "Arucoboard Reprojection Error: " << arucoRepError << endl;
+            arcuroCalibrationFlag = true;
+            cout << "Arucoboard Callibration Complete" << endl;
+
+        }
+
+
+        cout << "Callibration Complete. Press c to recallibrate" << endl;
+    }
+    frameCount++;
+
     cout << "Calibrating camera..." << endl;
 }
 
-void findCameraPose() {
+void findCameraPose(bool &foundcb,vector<Point2f> &cbCorners, bool &overlayFlag, Size &chessboardSize, Mat &overlay, Mat dst,
+                    bool &foundAruco, vector<Point2f> &arucoCorners, vector<Point2f> &outer4,
+                    vector<Point3f> &cbPoints,vector<Point3f> &arucoPoints,
+                     Mat &cbCam, Mat &arucoCam, Mat &cbDistCoeffs, Mat &arucoDistCoeffs,
+                    bool &cbCalibrationFlag, bool &arcuroCalibrationFlag) {
     // Code to find camera pose
+    if (cbCalibrationFlag || arcuroCalibrationFlag) {
+        if (foundcb && cbCalibrationFlag) {
+            vector<Point2f> outside;
+            int idx[] = {0, 8, 45, 53};
+            for (int i: idx) {
+                outside.push_back(cbCorners[i]);
+            }
+            drawChessboardCorners(dst, chessboardSize, cbCorners, foundcb);
+            if (overlayFlag) {
+                overlayImage(overlay, dst, outside);
+            }
+            Mat R,T;
+            bool status = solvePnPRansac(cbPoints,cbCorners,cbCam,cbDistCoeffs,R,T);
+            if (status){
+                rad2deg(R);
+                cout << "Chessboard Rotation Matrix:" << endl;
+                mprint(R);
+                cout << "Chessboard Translation Matrix:" << endl;
+                mprint(T);
+            }
+        }
+        if (foundAruco && arcuroCalibrationFlag) {
+            for (int i = 0; i < arucoCorners.size(); i++) {
+                circle(dst, arucoCorners[i], 1, Scalar(0, 0, 255), 5);
+            }
+            if (overlayFlag) {
+                overlayImage(overlay, dst, outer4);
+            }
+            Mat R,T;
+            bool status = solvePnPRansac(arucoPoints,arucoCorners,arucoCam,arucoDistCoeffs,R,T);
+            if (status){
+                rad2deg(R);
+                cout << "Aruco Rotation Matrix:" << endl;
+                mprint(R);
+                cout << "Aruco Translation Matrix:" << endl;
+                mprint(T);
+            }
+
+
+        }
+    }
+    else{
+        mode = SHOW_CORNERS;
+        if (!cbCalibrationFlag){
+            cout << "Please Calibrate on Chessboard First. Press c to calibrate" << endl;
+        }
+        if (!arcuroCalibrationFlag){
+            cout << "Please Calibrate on Arucoboard First. Press c to calibrate" << endl;
+        }
+    }
+
     cout << "Finding camera pose..." << endl;
 }
 void showVirtualObject() {
@@ -268,17 +394,18 @@ int main(int argc, char *argv[]) {
         };
 
         switch (mode) {
-            case SHOW_CORNERS:{
-                if (foundcb){
-                    vector<Point2f> outside;
-                    int idx[] = {0,8,45,53};
-                    for (int i: idx){
-                        outside.push_back(cbCorners[i]);
-                    }
-                    drawChessboardCorners(dst,chessboardSize,cbCorners,foundcb);
-                    if (overlayFlag){
-                        overlayImage(overlay, dst, outside);
-                    }
+            case SHOW_CORNERS:
+            {
+//                if (foundcb){
+//                    vector<Point2f> outside;
+//                    int idx[] = {0,8,45,53};
+//                    for (int i: idx){
+//                        outside.push_back(cbCorners[i]);
+//                    }
+//                    drawChessboardCorners(dst,chessboardSize,cbCorners,foundcb);
+//                    if (overlayFlag){
+//                        overlayImage(overlay, dst, outside);
+//                    }
                     if (objectFlag){
                         // calculate the pose of the chessboard
                         cv::Vec3d rvec, tvec;
@@ -307,64 +434,64 @@ int main(int argc, char *argv[]) {
                         // OverlayObjectOnChessboardCenterScaled(cbCam, cbDistCoeffs, rvec, tvec, vertices, facevertices, dst, chessboardSize.width, chessboardSize.height, 0.5);
                     }
 
-                }
-                if (foundAruco){
-                    for (int i=0; i<arucoCorners.size();i++){
-                        circle(dst,arucoCorners[i],1,Scalar(0,0,255),5);
-                    }
-                    if (overlayFlag){
-                        overlayImage(overlay, dst, outer4);
-                    }
-                }
+//                if (foundAruco){
+//                    for (int i=0; i<arucoCorners.size();i++){
+//                        circle(dst,arucoCorners[i],1,Scalar(0,0,255),5);
+//                    }
+//                    if (overlayFlag){
+//                        overlayImage(overlay, dst, outer4);
+//                    }
+//                }
                 break;
             }
+
             case CALLIBRATION:{
-                if (frameCount <= 6){
-
-                    if (foundcb){
-                        drawChessboardCorners(dst,chessboardSize,cbCorners,foundcb);
-                        cbCornerList.push_back(cbCorners);
-                        cbPointList.push_back(cbPoints);
-                    }
-                    if (foundAruco){
-                        for (int i=0; i<arucoCorners.size();i++){
-                            circle(dst,arucoCorners[i],2,Scalar(0,0,255));
-                        }
-                        arucoCornerList.push_back(arucoCorners);
-                        arucoPointList.push_back(arucoPoints);
-                    }
-                }
-                else{
-                    mode = SHOW_CORNERS;
-                    if (foundcb) {
-                        double cbRepError = calibrateCamera(cbPointList, cbCornerList, Size(src.rows, src.cols),
-                                                            cbCam,cbDistCoeffs, cbR, cbT);
-                        cout << "Chessboard Camera Matrix" << endl;
-                        mprint(cbCam);
-                        cout << "Chessboard Distortion Matrix" << endl;
-                        mprint(cbDistCoeffs);
-                        cout << "Chessboard Reprojection Error: " << cbRepError << endl;
-                        cbCalibrationFlag = true;
-                        cout << "Chessboard Callibration Complete" << endl;
-
-                    }
-                    if (foundAruco){
-                        double arucoRepError = calibrateCamera(arucoPointList,arucoCornerList,Size(src.rows,src.cols),
-                                                               arucoCam,arucoDistCoeffs,arucoR,arucoT);
-                        cout << "Arucoboard Camera Matrix" << endl;
-                        mprint(arucoCam);
-                        cout << "Arucoboard Distortion Matrix" << endl;
-                        mprint(arucoDistCoeffs);
-                        cout << "Arucoboard Reprojection Error: " << arucoRepError << endl;
-                        arcuroCalibrationFlag = true;
-                        cout << "Arucoboard Callibration Complete" << endl;
-
-                    }
-
-
-                    cout << "Callibration Complete. Press c to recallibrate" << endl;
-                }
-                frameCount++;
+//                if (frameCount <= 6){
+//
+//                    if (foundcb){
+//                        drawChessboardCorners(dst,chessboardSize,cbCorners,foundcb);
+//                        cbCornerList.push_back(cbCorners);
+//                        cbPointList.push_back(cbPoints);
+//                    }
+//                    if (foundAruco){
+//                        for (int i=0; i<arucoCorners.size();i++){
+//                            circle(dst,arucoCorners[i],2,Scalar(0,0,255));
+//                        }
+//                        arucoCornerList.push_back(arucoCorners);
+//                        arucoPointList.push_back(arucoPoints);
+//                    }
+//                }
+//                else{
+//                    mode = SHOW_CORNERS;
+//                    if (foundcb) {
+//                        double cbRepError = calibrateCamera(cbPointList, cbCornerList, Size(src.rows, src.cols),
+//                                                            cbCam,cbDistCoeffs, cbR, cbT);
+//                        cout << "Chessboard Camera Matrix" << endl;
+//                        mprint(cbCam);
+//                        cout << "Chessboard Distortion Matrix" << endl;
+//                        mprint(cbDistCoeffs);
+//                        cout << "Chessboard Reprojection Error: " << cbRepError << endl;
+//                        cbCalibrationFlag = true;
+//                        cout << "Chessboard Callibration Complete" << endl;
+//
+//                    }
+//                    if (foundAruco){
+//                        double arucoRepError = calibrateCamera(arucoPointList,arucoCornerList,Size(src.rows,src.cols),
+//                                                               arucoCam,arucoDistCoeffs,arucoR,arucoT);
+//                        cout << "Arucoboard Camera Matrix" << endl;
+//                        mprint(arucoCam);
+//                        cout << "Arucoboard Distortion Matrix" << endl;
+//                        mprint(arucoDistCoeffs);
+//                        cout << "Arucoboard Reprojection Error: " << arucoRepError << endl;
+//                        arcuroCalibrationFlag = true;
+//                        cout << "Arucoboard Callibration Complete" << endl;
+//
+//                    }
+//
+//
+//                    cout << "Callibration Complete. Press c to recallibrate" << endl;
+//                }
+//                frameCount++;
                 break;
             }
             case CAMERA_POSE:{

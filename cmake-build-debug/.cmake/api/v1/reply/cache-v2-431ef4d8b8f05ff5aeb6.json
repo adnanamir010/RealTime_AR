@@ -39,7 +39,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "e:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug"
+			"value" : "e:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/srijan/RealTime_AR/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -76,6 +76,42 @@
 			],
 			"type" : "INTERNAL",
 			"value" : "8"
+		},
+		{
+			"name" : "CMAKE_CODEBLOCKS_COMPILER_ID",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Id string of the compiler for the CodeBlocks IDE. Automatically detected when left empty"
+				}
+			],
+			"type" : "STRING",
+			"value" : ""
+		},
+		{
+			"name" : "CMAKE_CODEBLOCKS_EXECUTABLE",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The CodeBlocks executable"
+				}
+			],
+			"type" : "FILEPATH",
+			"value" : "CMAKE_CODEBLOCKS_EXECUTABLE-NOTFOUND"
+		},
+		{
+			"name" : "CMAKE_CODEBLOCKS_MAKE_ARGUMENTS",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Additional command line arguments when CodeBlocks invokes make. Enter e.g. -j<some_number> to get parallel builds"
+				}
+			],
+			"type" : "STRING",
+			"value" : ""
 		},
 		{
 			"name" : "CMAKE_COLOR_DIAGNOSTICS",
@@ -442,22 +478,6 @@
 			"value" : "/debug /INCREMENTAL"
 		},
 		{
-			"name" : "CMAKE_EXPORT_COMPILE_COMMANDS",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Enable/Disable output of compile commands during generation."
-				}
-			],
-			"type" : "BOOL",
-			"value" : ""
-		},
-		{
 			"name" : "CMAKE_EXTRA_GENERATOR",
 			"properties" : 
 			[
@@ -467,7 +487,31 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : ""
+			"value" : "CodeBlocks"
+		},
+		{
+			"name" : "CMAKE_EXTRA_GENERATOR_CXX_SYSTEM_INCLUDE_DIRS",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "CXX compiler system include directories"
+				}
+			],
+			"type" : "INTERNAL",
+			"value" : "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.38.33130\\include;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Auxiliary\\VS\\include;C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt;C:\\Program Files (x86)\\Windows Kits\\10\\\\include\\10.0.22621.0\\\\um;C:\\Program Files (x86)\\Windows Kits\\10\\\\include\\10.0.22621.0\\\\shared;C:\\Program Files (x86)\\Windows Kits\\10\\\\include\\10.0.22621.0\\\\winrt;C:\\Program Files (x86)\\Windows Kits\\10\\\\include\\10.0.22621.0\\\\cppwinrt;C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\include\\um"
+		},
+		{
+			"name" : "CMAKE_EXTRA_GENERATOR_C_SYSTEM_INCLUDE_DIRS",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "C compiler system include directories"
+				}
+			],
+			"type" : "INTERNAL",
+			"value" : "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.38.33130\\include;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Auxiliary\\VS\\include;C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt;C:\\Program Files (x86)\\Windows Kits\\10\\\\include\\10.0.22621.0\\\\um;C:\\Program Files (x86)\\Windows Kits\\10\\\\include\\10.0.22621.0\\\\shared;C:\\Program Files (x86)\\Windows Kits\\10\\\\include\\10.0.22621.0\\\\winrt;C:\\Program Files (x86)\\Windows Kits\\10\\\\include\\10.0.22621.0\\\\cppwinrt;C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\include\\um"
 		},
 		{
 			"name" : "CMAKE_FIND_PACKAGE_REDIRECTS_DIR",
@@ -479,7 +523,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/srijan/RealTime_AR/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -491,7 +535,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "Ninja"
+			"value" : "NMake Makefiles"
 		},
 		{
 			"name" : "CMAKE_GENERATOR_INSTANCE",
@@ -539,7 +583,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4"
+			"value" : "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/srijan/RealTime_AR"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -574,12 +618,16 @@
 			"properties" : 
 			[
 				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
 					"name" : "HELPSTRING",
-					"value" : "make program"
+					"value" : "Program used to build from makefiles."
 				}
 			],
-			"type" : "FILEPATH",
-			"value" : "C:/Program Files/JetBrains/CLion 2023.3.2/bin/ninja/win/x64/ninja.exe"
+			"type" : "STRING",
+			"value" : "nmake"
 		},
 		{
 			"name" : "CMAKE_MODULE_LINKER_FLAGS",
@@ -1111,7 +1159,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug"
+			"value" : "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/srijan/RealTime_AR/cmake-build-debug"
 		},
 		{
 			"name" : "Project4_IS_TOP_LEVEL",
@@ -1135,7 +1183,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4"
+			"value" : "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/srijan/RealTime_AR"
 		}
 	],
 	"kind" : "cache",

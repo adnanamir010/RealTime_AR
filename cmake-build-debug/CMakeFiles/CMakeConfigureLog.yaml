@@ -39,7 +39,7 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
       
       The C compiler identification is MSVC, found in:
-        E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdC/CMakeCCompilerId.exe
+        E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/srijan/RealTime_AR/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdC/CMakeCCompilerId.exe
       
   -
     kind: "message-v1"
@@ -51,7 +51,7 @@ events:
     message: |
       Detecting C compiler /showIncludes prefix:
         main.c
-        Note: including file: E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\cmake-build-debug\\CMakeFiles\\ShowIncludes\\foo.h
+        Note: including file: E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\srijan\\RealTime_AR\\cmake-build-debug\\CMakeFiles\\ShowIncludes\\foo.h
         
       Found prefix "Note: including file: "
   -
@@ -85,7 +85,7 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
       
       The CXX compiler identification is MSVC, found in:
-        E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdCXX/CMakeCXXCompilerId.exe
+        E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/srijan/RealTime_AR/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdCXX/CMakeCXXCompilerId.exe
       
   -
     kind: "message-v1"
@@ -97,7 +97,7 @@ events:
     message: |
       Detecting CXX compiler /showIncludes prefix:
         main.c
-        Note: including file: E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\cmake-build-debug\\CMakeFiles\\ShowIncludes\\foo.h
+        Note: including file: E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\srijan\\RealTime_AR\\cmake-build-debug\\CMakeFiles\\ShowIncludes\\foo.h
         
       Found prefix "Note: including file: "
   -
@@ -109,8 +109,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-q2n9iz"
-      binary: "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-q2n9iz"
+      source: "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/srijan/RealTime_AR/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-gf0d0v"
+      binary: "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/srijan/RealTime_AR/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-gf0d0v"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -119,11 +119,28 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-q2n9iz'
+        Change Dir: 'E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/srijan/RealTime_AR/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-gf0d0v'
         
-        Run Build Command(s): "C:/Program Files/JetBrains/CLion 2023.3.2/bin/ninja/win/x64/ninja.exe" -v cmTC_f6cb9
-        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1438~1.331\\bin\\Hostx64\\x64\\cl.exe  /nologo   /DWIN32 /D_WINDOWS  /Ob0 /Od /RTC1 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_f6cb9.dir\\CMakeCCompilerABI.c.obj /FdCMakeFiles\\cmTC_f6cb9.dir\\ /FS -c "C:\\Program Files\\JetBrains\\CLion 2023.3.2\\bin\\cmake\\win\\x64\\share\\cmake-3.27\\Modules\\CMakeCCompilerABI.c"
-        [2/2] cmd.exe /C "cd . && "C:\\Program Files\\JetBrains\\CLion 2023.3.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_f6cb9.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1438~1.331\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_f6cb9.dir\\CMakeCCompilerABI.c.obj  /out:cmTC_f6cb9.exe /implib:cmTC_f6cb9.lib /pdb:cmTC_f6cb9.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): "C:/Program Files/JetBrains/CLion 2023.3.2/bin/cmake/win/x64/bin/cmake.exe" -E env VERBOSE=1 nmake -f Makefile /nologo cmTC_2f246\\fast
+        	"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\nmake.exe"  -f CMakeFiles\\cmTC_2f246.dir\\build.make /nologo -L                  CMakeFiles\\cmTC_2f246.dir\\build
+        Building C object CMakeFiles/cmTC_2f246.dir/CMakeCCompilerABI.c.obj
+        	"C:\\Program Files\\JetBrains\\CLion 2023.3.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E cmake_cl_compile_depends --dep-file=CMakeFiles\\cmTC_2f246.dir\\CMakeCCompilerABI.c.obj.d --working-dir="E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\srijan\\RealTime_AR\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-gf0d0v" --filter-prefix="Note: including file: " -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1438~1.331\\bin\\Hostx64\\x64\\cl.exe @C:\\Users\\Admin\\AppData\\Local\\Temp\\nm770A.tmp
+        CMakeCCompilerABI.c
+        Linking C executable cmTC_2f246.exe
+        	"C:\\Program Files\\JetBrains\\CLion 2023.3.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_2f246.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1438~1.331\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_2f246.dir\\objects1.rsp @C:\\Users\\Admin\\AppData\\Local\\Temp\\nm7CE7.tmp
+        Visual Studio Incremental Link with embedded manifests
+        Create CMakeFiles\\cmTC_2f246.dir/manifest.rc
+        Create empty: CMakeFiles\\cmTC_2f246.dir/embed.manifest
+        RC Pass 1:
+        C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe /fo CMakeFiles\\cmTC_2f246.dir/manifest.res CMakeFiles\\cmTC_2f246.dir/manifest.rc
+        LINK Pass 1:
+        C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1438~1.331\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_2f246.dir\\objects1.rsp /out:cmTC_2f246.exe /implib:cmTC_2f246.lib /pdb:E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\srijan\\RealTime_AR\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-gf0d0v\\cmTC_2f246.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_2f246.dir/intermediate.manifest CMakeFiles\\cmTC_2f246.dir/manifest.res
+        MT:
+        C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe /nologo /manifest CMakeFiles\\cmTC_2f246.dir/intermediate.manifest /out:CMakeFiles\\cmTC_2f246.dir/embed.manifest /notify_update
+        RC Pass 2:
+        C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe /fo CMakeFiles\\cmTC_2f246.dir/manifest.res CMakeFiles\\cmTC_2f246.dir/manifest.rc
+        FINAL LINK:
+        C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1438~1.331\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_2f246.dir\\objects1.rsp /out:cmTC_2f246.exe /implib:cmTC_2f246.lib /pdb:E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\srijan\\RealTime_AR\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-gf0d0v\\cmTC_2f246.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_2f246.dir/intermediate.manifest CMakeFiles\\cmTC_2f246.dir/manifest.res
         
       exitCode: 0
   -
@@ -135,8 +152,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-sv28v8"
-      binary: "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-sv28v8"
+      source: "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/srijan/RealTime_AR/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-8pbqdg"
+      binary: "E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/srijan/RealTime_AR/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-8pbqdg"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -145,11 +162,28 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-sv28v8'
+        Change Dir: 'E:/backup/Desktop/College/NEU/sem 2/cs 5330 pattern recognition and computer vision/Project4/srijan/RealTime_AR/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-8pbqdg'
         
-        Run Build Command(s): "C:/Program Files/JetBrains/CLion 2023.3.2/bin/ninja/win/x64/ninja.exe" -v cmTC_84ba2
-        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1438~1.331\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /EHsc  /Ob0 /Od /RTC1 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_84ba2.dir\\CMakeCXXCompilerABI.cpp.obj /FdCMakeFiles\\cmTC_84ba2.dir\\ /FS -c "C:\\Program Files\\JetBrains\\CLion 2023.3.2\\bin\\cmake\\win\\x64\\share\\cmake-3.27\\Modules\\CMakeCXXCompilerABI.cpp"
-        [2/2] cmd.exe /C "cd . && "C:\\Program Files\\JetBrains\\CLion 2023.3.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_84ba2.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1438~1.331\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_84ba2.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_84ba2.exe /implib:cmTC_84ba2.lib /pdb:cmTC_84ba2.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): "C:/Program Files/JetBrains/CLion 2023.3.2/bin/cmake/win/x64/bin/cmake.exe" -E env VERBOSE=1 nmake -f Makefile /nologo cmTC_f0d98\\fast
+        	"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\nmake.exe"  -f CMakeFiles\\cmTC_f0d98.dir\\build.make /nologo -L                  CMakeFiles\\cmTC_f0d98.dir\\build
+        Building CXX object CMakeFiles/cmTC_f0d98.dir/CMakeCXXCompilerABI.cpp.obj
+        	"C:\\Program Files\\JetBrains\\CLion 2023.3.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E cmake_cl_compile_depends --dep-file=CMakeFiles\\cmTC_f0d98.dir\\CMakeCXXCompilerABI.cpp.obj.d --working-dir="E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\srijan\\RealTime_AR\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-8pbqdg" --filter-prefix="Note: including file: " -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1438~1.331\\bin\\Hostx64\\x64\\cl.exe @C:\\Users\\Admin\\AppData\\Local\\Temp\\nm816A.tmp
+        CMakeCXXCompilerABI.cpp
+        Linking CXX executable cmTC_f0d98.exe
+        	"C:\\Program Files\\JetBrains\\CLion 2023.3.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_f0d98.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1438~1.331\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_f0d98.dir\\objects1.rsp @C:\\Users\\Admin\\AppData\\Local\\Temp\\nm81C9.tmp
+        Visual Studio Incremental Link with embedded manifests
+        Create CMakeFiles\\cmTC_f0d98.dir/manifest.rc
+        Create empty: CMakeFiles\\cmTC_f0d98.dir/embed.manifest
+        RC Pass 1:
+        C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe /fo CMakeFiles\\cmTC_f0d98.dir/manifest.res CMakeFiles\\cmTC_f0d98.dir/manifest.rc
+        LINK Pass 1:
+        C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1438~1.331\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_f0d98.dir\\objects1.rsp /out:cmTC_f0d98.exe /implib:cmTC_f0d98.lib /pdb:E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\srijan\\RealTime_AR\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-8pbqdg\\cmTC_f0d98.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_f0d98.dir/intermediate.manifest CMakeFiles\\cmTC_f0d98.dir/manifest.res
+        MT:
+        C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe /nologo /manifest CMakeFiles\\cmTC_f0d98.dir/intermediate.manifest /out:CMakeFiles\\cmTC_f0d98.dir/embed.manifest /notify_update
+        RC Pass 2:
+        C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe /fo CMakeFiles\\cmTC_f0d98.dir/manifest.res CMakeFiles\\cmTC_f0d98.dir/manifest.rc
+        FINAL LINK:
+        C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1438~1.331\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_f0d98.dir\\objects1.rsp /out:cmTC_f0d98.exe /implib:cmTC_f0d98.lib /pdb:E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\srijan\\RealTime_AR\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-8pbqdg\\cmTC_f0d98.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_f0d98.dir/intermediate.manifest CMakeFiles\\cmTC_f0d98.dir/manifest.res
         
       exitCode: 0
 ...
