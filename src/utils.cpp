@@ -50,23 +50,23 @@ bool getArucoCorners(cv::Mat& src, std::vector<cv::Point2f>& corners,vector<Poin
     corners.resize(35,Point2f(0,0));
     outer4.resize(4, Point2f(0, 0));
 
-    // Marker detection variables
-    // cv::aruco::Dictionary dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
-    // std::vector<int> markerIds;
-    // std::vector<std::vector<cv::Point2f>> markerCorners,rejectedCandidates;
-    // cv::aruco::DetectorParameters parameters = cv::aruco::DetectorParameters();
-    // cv::aruco::ArucoDetector detector(dictionary,parameters);
+//     Marker detection variables
+     cv::aruco::Dictionary dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
+     std::vector<int> markerIds;
+     std::vector<std::vector<cv::Point2f>> markerCorners,rejectedCandidates;
+     cv::aruco::DetectorParameters parameters = cv::aruco::DetectorParameters();
+     cv::aruco::ArucoDetector detector(dictionary,parameters);
 
-    // // Detect markers
-    // detector.detectMarkers(src,markerCorners,markerIds,rejectedCandidates);
+     // Detect markers
+     detector.detectMarkers(src,markerCorners,markerIds,rejectedCandidates);
     
 
-    std::vector<int> markerIds;
-    std::vector<std::vector<cv::Point2f>> markerCorners,rejectedCandidates;
-    cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
-
-    // Detect markers
-    cv::aruco::detectMarkers(src,dictionary, markerCorners,markerIds);
+//    std::vector<int> markerIds;
+//    std::vector<std::vector<cv::Point2f>> markerCorners,rejectedCandidates;
+//    cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
+//
+//    // Detect markers
+//    cv::aruco::detectMarkers(src,dictionary, markerCorners,markerIds);
 
     // Assign the top left corner of detected markers to the corners vector based on marker ID
     for (size_t i = 0; i < markerIds.size(); i++) {
@@ -391,6 +391,31 @@ int OverlayObjectOnChessboardCenterScaled(const cv::Mat& cameraMatrix, const cv:
             cv::line(frame, imagePoints[face[i]], imagePoints[face[(i + 1) % face.size()]], faceColor, 3);
         }
     }
+
+    return 0;
+}
+void initCalibration(Mat &Cam, Mat &DistCoeffs, Mat &src){
+    Cam = Mat::eye(3, 3, CV_64F);
+    Cam.at<double>(0, 2) = src.cols/2;
+    Cam.at<double>(1, 2) = src.rows/2;
+    DistCoeffs = Mat::zeros(5, 1, CV_64F);
+    cout << "Camera Matrix Before Calibration" << endl;
+    mprint(Cam);
+    cout << "Distortion Matrix Before Calibration" << endl;
+    mprint(DistCoeffs);
+}
+
+int save2xml(Mat &Cam, cv::Mat &DistCoeffs, string path) {
+    cv::FileStorage fs
+            (path,
+             cv::FileStorage::WRITE);
+
+    // Write the matrices to the file
+    fs << "Camera_Matrix" << Cam;
+    fs << "Distortion_Coefficients" << DistCoeffs;
+
+    // Release the file storage
+    fs.release();
 
     return 0;
 }

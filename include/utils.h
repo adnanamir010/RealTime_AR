@@ -76,4 +76,9 @@ int overlayCorners(cv::Mat cameraMatrix, cv::Mat distCoeffs, cv::Vec3d rvec, cv:
 int overlayObject(cv::Mat& cameraMatrix, cv::Mat& distCoeffs, cv::Vec3d& rvec, cv::Vec3d& tvec, std::vector<cv::Point3f>& objectVertices, std::vector<std::vector<int>>& objectFaces, cv::Mat& frame);
 int OverlayObjectOnChessboardCenterScaled(const cv::Mat& cameraMatrix, const cv::Mat& distCoeffs, const cv::Vec3d& rvec, cv::Vec3d& tvec, std::vector<cv::Point3f>& objectVertices, const std::vector<std::vector<int>>& objectFaces, cv::Mat& frame, const int numSquaresX, const int numSquaresY, const float squareSize);
 
+void initCalibration(Mat &Cam, Mat &DistCoeffs, Mat &src);
+
+int save2xml(Mat &Cam, cv::Mat &DistCoeffs, string path);
+
+
 #endif //PROJECT4_UTILS_H

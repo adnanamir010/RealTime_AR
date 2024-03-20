@@ -65,7 +65,7 @@ void calibrateCam(bool &foundcb,vector<Point2f> &cbCorners, bool &overlayFlag, S
                   bool &foundAruco, vector<Point2f> &arucoCorners, vector<Point2f> &outer4, int frameCount, vector<vector<Point2f>> &cbCornerList,
                   vector<vector<Point3f>> &cbPointList, vector<Point3f> &cbPoints,vector<Point3f> &arucoPoints,vector<vector<Point3f>> &arucoPointList,
                   vector<vector<Point2f>> &arucoCornerList, Mat &src,Mat &cbCam, Mat &arucoCam, Mat &cbDistCoeffs, Mat &arucoDistCoeffs, Mat &cbR, Mat &cbT, Mat &arucoR, Mat &arucoT,
-                  bool &cbCalibrationFlag, bool &arcuroCalibrationFlag) {
+                  bool &cbCalibrationFlag, bool &arcuroCalibrationFlag, string cb_xml_path, string aruco_xml_path) {
     // Code to calibrate camera
     if (frameCount <= 6){
 
@@ -85,6 +85,8 @@ void calibrateCam(bool &foundcb,vector<Point2f> &cbCorners, bool &overlayFlag, S
     else{
         mode = SHOW_CORNERS;
         if (foundcb) {
+            initCalibration(cbCam,cbDistCoeffs,src);
+
             double cbRepError = calibrateCamera(cbPointList, cbCornerList, Size(src.rows, src.cols),
                                                 cbCam,cbDistCoeffs, cbR, cbT);
             cout << "Chessboard Camera Matrix" << endl;
@@ -94,9 +96,14 @@ void calibrateCam(bool &foundcb,vector<Point2f> &cbCorners, bool &overlayFlag, S
             cout << "Chessboard Reprojection Error: " << cbRepError << endl;
             cbCalibrationFlag = true;
             cout << "Chessboard Callibration Complete" << endl;
+            int done = save2xml(cbCam,cbDistCoeffs,cb_xml_path);
+            if (done) cout << "Parameters Written to XML succefully" << endl;
+            else cout << "Parameters Not Written to XML" << endl;
 
         }
         if (foundAruco){
+            initCalibration(arucoCam,arucoDistCoeffs,src);
+
             double arucoRepError = calibrateCamera(arucoPointList,arucoCornerList,Size(src.rows,src.cols),
                                                    arucoCam,arucoDistCoeffs,arucoR,arucoT);
             cout << "Arucoboard Camera Matrix" << endl;
@@ -106,9 +113,10 @@ void calibrateCam(bool &foundcb,vector<Point2f> &cbCorners, bool &overlayFlag, S
             cout << "Arucoboard Reprojection Error: " << arucoRepError << endl;
             arcuroCalibrationFlag = true;
             cout << "Arucoboard Callibration Complete" << endl;
-
+            int done = save2xml(arucoCam,arucoDistCoeffs,aruco_xml_path);
+            if (done) cout << "Parameters Written to XML succefully" << endl;
+            else cout << "Parameters Not Written to XML" << endl;
         }
-
 
         cout << "Callibration Complete. Press c to recallibrate" << endl;
     }
@@ -267,6 +275,9 @@ int main(int argc, char *argv[]) {
     string path = "assets/Sentinels_Esports_Logo.png";
     cv::VideoCapture *capdev;
     string path2 = "assets/cow-nonormals.obj";
+    string cb_xml_path = "E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\Camera_Params_cb.xml";
+    string aruco_xml_path = "E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\Camera_Params_aruco.xml";
+
     // open the video device
     capdev = new cv::VideoCapture(2);
     capdev->set(cv::CAP_PROP_FRAME_WIDTH, 640);
@@ -497,6 +508,8 @@ int main(int argc, char *argv[]) {
 //                else{
 //                    mode = SHOW_CORNERS;
 //                    if (foundcb) {
+//                        initCalibration(cbCam,cbDistCoeffs,src);
+//
 //                        double cbRepError = calibrateCamera(cbPointList, cbCornerList, Size(src.rows, src.cols),
 //                                                            cbCam,cbDistCoeffs, cbR, cbT);
 //                        cout << "Chessboard Camera Matrix" << endl;
@@ -506,9 +519,14 @@ int main(int argc, char *argv[]) {
 //                        cout << "Chessboard Reprojection Error: " << cbRepError << endl;
 //                        cbCalibrationFlag = true;
 //                        cout << "Chessboard Callibration Complete" << endl;
+//                        int done = save2xml(cbCam,cbDistCoeffs,cb_xml_path);
+//                        if (done) cout << "Parameters Written to XML succefully" << endl;
+//                        else cout << "Parameters Not Written to XML" << endl;
 //
 //                    }
 //                    if (foundAruco){
+//                        initCalibration(arucoCam,arucoDistCoeffs,src);
+//
 //                        double arucoRepError = calibrateCamera(arucoPointList,arucoCornerList,Size(src.rows,src.cols),
 //                                                               arucoCam,arucoDistCoeffs,arucoR,arucoT);
 //                        cout << "Arucoboard Camera Matrix" << endl;
@@ -518,9 +536,10 @@ int main(int argc, char *argv[]) {
 //                        cout << "Arucoboard Reprojection Error: " << arucoRepError << endl;
 //                        arcuroCalibrationFlag = true;
 //                        cout << "Arucoboard Callibration Complete" << endl;
-//
+//                        int done = save2xml(arucoCam,arucoDistCoeffs,aruco_xml_path);
+//                        if (done) cout << "Parameters Written to XML succefully" << endl;
+//                        else cout << "Parameters Not Written to XML" << endl;
 //                    }
-//
 //
 //                    cout << "Callibration Complete. Press c to recallibrate" << endl;
 //                }
