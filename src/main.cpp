@@ -397,11 +397,11 @@ int main(int argc, char *argv[]) {
             case SHOW_CORNERS:
             {
 //                if (foundcb){
-//                    vector<Point2f> outside;
-//                    int idx[] = {0,8,45,53};
-//                    for (int i: idx){
-//                        outside.push_back(cbCorners[i]);
-//                    }
+                    vector<Point2f> outside;
+                    int idx[] = {0,8,45,53};
+                    for (int i: idx){
+                        outside.push_back(cbCorners[i]);
+                    }
 //                    drawChessboardCorners(dst,chessboardSize,cbCorners,foundcb);
 //                    if (overlayFlag){
 //                        overlayImage(overlay, dst, outside);
@@ -430,18 +430,51 @@ int main(int argc, char *argv[]) {
                         // draw the four outside corners of the chessboard as circles
                         // and the 3D axes at the origin of the chessboard
                         overlayCorners(cbCam, cbDistCoeffs, rvec, tvec, dst);
+                        if (overlayFlag){
+                        overlayImage(overlay, dst, outside);
+                    }
                         overlayObject(cbCam, cbDistCoeffs, rvec, tvec_centered, vertices, facevertices, dst);
                         // OverlayObjectOnChessboardCenterScaled(cbCam, cbDistCoeffs, rvec, tvec, vertices, facevertices, dst, chessboardSize.width, chessboardSize.height, 0.5);
                     }
 
-//                if (foundAruco){
-//                    for (int i=0; i<arucoCorners.size();i++){
-//                        circle(dst,arucoCorners[i],1,Scalar(0,0,255),5);
-//                    }
-//                    if (overlayFlag){
-//                        overlayImage(overlay, dst, outer4);
-//                    }
-//                }
+                if (foundAruco){
+                    for (int i=0; i<arucoCorners.size();i++){
+                        circle(dst,arucoCorners[i],1,Scalar(0,0,255),5);
+                    }
+                    if (overlayFlag){
+                        overlayImage(overlay, dst, outer4);
+                    }
+                    if (objectFlag){
+                        // calculate the pose of the chessboard
+                        cv::Vec3d rvec, tvec;
+                        cv::solvePnP(arucoPoints, arucoCorners, arucoCam, arucoDistCoeffs, rvec, tvec);
+
+                        // print the pose of the chessboard
+                        std::cout << "rvec: " << rvec << std::endl;
+                        std::cout << "tvec: " << tvec << std::endl;
+                        cv::Mat rotationMatrix;
+                        cv::Rodrigues(rvec, rotationMatrix);
+
+                        // Calculate the chessboard's center in its own reference frame
+                        cv::Point3f chessboardCenter(2, -3, 0.0);
+
+                        // Transform the chessboard center to the camera's reference frame
+                        cv::Mat chessboardCenterMat = (cv::Mat_<double>(3,1) << chessboardCenter.x, chessboardCenter.y, chessboardCenter.z);
+                        chessboardCenterMat = rotationMatrix * chessboardCenterMat + cv::Mat(tvec);
+
+                        // Use the transformed chessboard center for the object's translation vector
+                        cv::Vec3d tvec_centered = cv::Vec3d(chessboardCenterMat);
+
+                        // draw the four outside corners of the chessboard as circles
+                        // and the 3D axes at the origin of the chessboard
+                        overlayCorners(arucoCam, arucoDistCoeffs, rvec, tvec, dst);
+                        if (overlayFlag){
+                            overlayImage(overlay, dst, outer4);
+                        }
+                        overlayObject(arucoCam, arucoDistCoeffs, rvec, tvec_centered, vertices, facevertices, dst);
+                        // OverlayObjectOnChessboardCenterScaled(cbCam, cbDistCoeffs, rvec, tvec, vertices, facevertices, dst, chessboardSize.width, chessboardSize.height, 0.5);
+                    }
+                }
                 break;
             }
 
