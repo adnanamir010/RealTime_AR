@@ -23,18 +23,128 @@ enum mode {
 } mode;
 
 
+const int menu_height = 100;
+const int menu_width = 300;
+
+const int button_height = 20;
+const int button_width = 300;
+char targetPath[256];
+const string menu_options[] = {
+	"Show Corners",
+	"Calibrate Camera",
+	"Calculate Outside Corners and Show 3D Axis",
+	"Show Virtual Object",
+	"Exit"
+};
+void showCorners() {
+    // Code to show corners
+    cout << "Showing corners..." << endl;
+}
+
+void calibrateCam() {
+    // Code to calibrate camera
+    cout << "Calibrating camera..." << endl;
+}
+
+void findCameraPose() {
+    // Code to find camera pose
+    cout << "Finding camera pose..." << endl;
+}
+void showVirtualObject() {
+    // Code to show virtual object
+    cout << "Showing virtual object..." << endl;
+}
+// Function to draw styled buttons for the interactive menu
+void drawStyledMenu(Mat& menuImage) {
+    menuImage.setTo(Scalar(100, 100, 100)); // Set a darker grey background
+
+    int buttonSpacing = 15; // Space between buttons
+    int buttonHeight = (menuImage.rows - (buttonSpacing * (sizeof(menu_options) / sizeof(string) + 1))) / (sizeof(menu_options) / sizeof(string));
+    int buttonWidth = menuImage.cols - (2 * buttonSpacing);
+    int yPos = buttonSpacing;
+
+    for (const auto& option : menu_options) {
+        // Draw the button
+        Point topLeft(buttonSpacing, yPos);
+        Point bottomRight(buttonSpacing + buttonWidth, yPos + buttonHeight);
+        rectangle(menuImage, topLeft, bottomRight, Scalar(200, 200, 100), FILLED);
+        
+        // Draw the button text
+        int baseLine;
+        Size textSize = getTextSize(option, FONT_HERSHEY_SIMPLEX, 0.5, 2, &baseLine);
+        Point textOrg((menuImage.cols - textSize.width) / 2, yPos + (buttonHeight + textSize.height) / 2);
+        putText(menuImage, option, textOrg, FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 0), 1.5);
+
+        yPos += buttonHeight + buttonSpacing;
+    }
+}
+// Callback function for mouse events
+void onMouse(int event, int x, int y, int, void*) {
+    if (event != EVENT_LBUTTONDOWN) return; // Only interested in left button clicks
+
+    int buttonSpacing = 10;
+    int totalOptions = sizeof(menu_options) / sizeof(string);
+    int menuHeight = 400; // Assuming a menu height, adjust based on your initialization
+    int buttonHeight = (menuHeight - (buttonSpacing * (totalOptions + 1))) / totalOptions;
+
+    int clickedOption = -1;
+    for (int i = 0; i < totalOptions; ++i) {
+        int yPos = buttonSpacing + i * (buttonHeight + buttonSpacing);
+        if (y > yPos && y < yPos + buttonHeight) {
+            clickedOption = i;
+            break;
+        }
+    }
+
+    if (clickedOption != -1) {
+        cout << "Selected: " << menu_options[clickedOption] << endl;
+        // Handle menu option selection here
+    
+			switch (clickedOption) {
+			case 0: {
+                // saveFeatures("olympus", "baseline");
+				showCorners();
+				break;
+			}
+			case 1: {
+                // saveFeatures("olympus", "histogram_matching");
+				calibrateCam();
+				break;
+			}
+			case 2: {
+                // saveFeatures("olympus", "multi-histogram_matching");
+				findCameraPose();
+				break;
+			}
+			case 3: {
+                // saveFeatures("olympus", "texture-color_matching");
+				showVirtualObject();
+				break;
+			}
+			case 4: {
+				exit(0);
+				break;
+			}
+			}
+		}
+
+}
+
+
 int main(int argc, char *argv[]) {
 
 //    if (argc < 2) {
 //        printf("usage %s <image filename> \n", argv[0]);
 //        exit(-1);
 //    }
-    string path = "E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\assets\\Sentinels_Esports_Logo.png";
-
+    // string path = "E:\\backup\\Desktop\\College\\NEU\\sem 2\\cs 5330 pattern recognition and computer vision\\Project4\\assets\\Sentinels_Esports_Logo.png";
+    string path = "assets/Sentinels_Esports_Logo.png";
     cv::VideoCapture *capdev;
-
+    string path2 = "assets/cow-nonormals.obj";
     // open the video device
-    capdev = new cv::VideoCapture(0);
+    capdev = new cv::VideoCapture(2);
+    capdev->set(cv::CAP_PROP_FRAME_WIDTH, 640);
+    capdev->set(cv::CAP_PROP_FRAME_HEIGHT, 480);
     if( !capdev->isOpened() ) {
         printf("Unable to open video device\n");
         return(-1);
@@ -56,16 +166,63 @@ int main(int argc, char *argv[]) {
     int frameCount=0;
 
     Mat overlay = imread(path,IMREAD_COLOR);
+    std::vector<cv::Point3f> vertices;
+    std::vector<cv::Point3f> normals;
+    std::vector<std::vector<int>> facevertices;
+    parseOBJFile(path2, vertices, normals, facevertices);
+
+
+    cv::Point3f minPoint = vertices[0];
+    cv::Point3f maxPoint = vertices[0];
+    for (const auto& vertex : vertices) {
+        minPoint.x = std::min(minPoint.x, vertex.x);
+        minPoint.y = std::min(minPoint.y, vertex.y);
+        minPoint.z = std::min(minPoint.z, vertex.z);
+        
+        maxPoint.x = std::max(maxPoint.x, vertex.x);
+        maxPoint.y = std::max(maxPoint.y, vertex.y);
+        maxPoint.z = std::max(maxPoint.z, vertex.z);
+    }
+
+    float objectWidth = maxPoint.x - minPoint.x;
+    float objectHeight = maxPoint.y - minPoint.y;
+    // Optionally include depth (z-axis) in scaling if desired:
+    // float objectDepth = maxPoint.z - minPoint.z;
+    int numSquaresX = 9.0;
+    int numSquaresY = 6.0;
+    float squareSize = 1.0;
+    float chessboardWidth = (numSquaresX - 1) * squareSize;
+    float chessboardHeight = (numSquaresY - 1) * squareSize;
+
+    // Calculate scale factors
+    float scaleX = chessboardWidth / objectWidth;
+    float scaleY = chessboardHeight / objectHeight;
+    // For uniform scaling in all dimensions, find the minimum scale factor
+    float scale = std::min(scaleX, scaleY);
+    // float scale = 1.2;
+    std::cout << "Scale: " << scale << std::endl;
+
+    // Now, apply this scale to all vertices
+    for (auto& vertex : vertices) {
+        vertex.x *= scale;
+        vertex.y *= scale;
+        vertex.z *= scale; // Scale z if you want to maintain the object's 3D aspect ratio
+    }
+
+
+
     bool overlayFlag = false;
     bool cbCalibrationFlag = false;
     bool arcuroCalibrationFlag = false;
-
+    bool objectFlag = false;
 
     mode = SHOW_CORNERS;
 
     //initializing 3D world coordinate vectors for targets
     vector<Vec3f> cbPoints = initWorldCoords(chessboardSize);
     vector<Vec3f> arucoPoints = initWorldCoords(arucoSize);
+
+
 
     for(;;) {
         *capdev >> src; // get a new frame from the camera, treat as a stream
@@ -74,7 +231,7 @@ int main(int argc, char *argv[]) {
             break;
         }
         // resize the frame to 1/2 of the original size
-        resize(src, src, Size(), 0.5, 0.5);
+        // resize(src, src, Size(), 0.5, 0.5);
         dst = src.clone();
 
         // see if there is a waiting keystroke
@@ -93,6 +250,9 @@ int main(int argc, char *argv[]) {
         }
         if (key == 'o') {
             overlayFlag = !overlayFlag;
+        }
+        if (key == 'r'){
+            objectFlag = !objectFlag;
         }
 
         switch (key) {
@@ -118,6 +278,33 @@ int main(int argc, char *argv[]) {
                     drawChessboardCorners(dst,chessboardSize,cbCorners,foundcb);
                     if (overlayFlag){
                         overlayImage(overlay, dst, outside);
+                    }
+                    if (objectFlag){
+                        // calculate the pose of the chessboard
+                        cv::Vec3d rvec, tvec;
+                        cv::solvePnP(cbPoints, cbCorners, cbCam, cbDistCoeffs, rvec, tvec);
+
+                        // print the pose of the chessboard
+                        std::cout << "rvec: " << rvec << std::endl;
+                        std::cout << "tvec: " << tvec << std::endl;
+                        cv::Mat rotationMatrix;
+                        cv::Rodrigues(rvec, rotationMatrix);
+
+                        // Calculate the chessboard's center in its own reference frame
+                        cv::Point3f chessboardCenter(4.0, -2.5, 0.0);
+
+                        // Transform the chessboard center to the camera's reference frame
+                        cv::Mat chessboardCenterMat = (cv::Mat_<double>(3,1) << chessboardCenter.x, chessboardCenter.y, chessboardCenter.z);
+                        chessboardCenterMat = rotationMatrix * chessboardCenterMat + cv::Mat(tvec);
+
+                        // Use the transformed chessboard center for the object's translation vector
+                        cv::Vec3d tvec_centered = cv::Vec3d(chessboardCenterMat);
+
+                        // draw the four outside corners of the chessboard as circles
+                        // and the 3D axes at the origin of the chessboard
+                        overlayCorners(cbCam, cbDistCoeffs, rvec, tvec, dst);
+                        overlayObject(cbCam, cbDistCoeffs, rvec, tvec_centered, vertices, facevertices, dst);
+                        // OverlayObjectOnChessboardCenterScaled(cbCam, cbDistCoeffs, rvec, tvec, vertices, facevertices, dst, chessboardSize.width, chessboardSize.height, 0.5);
                     }
 
                 }
@@ -245,7 +432,18 @@ int main(int argc, char *argv[]) {
         cv::imshow("Video", dst);
 
     }
-
     delete capdev;
+    Mat menuImage = Mat::zeros(400, 240, CV_8UC3); // Adjust size as needed
+
+    drawStyledMenu(menuImage);
+
+    namedWindow("RealTime Augmented Reality", WINDOW_AUTOSIZE);
+    setMouseCallback("RealTime Augmented Reality", onMouse);
+
+    imshow("RealTime Augmented Reality", menuImage);
+    waitKey(0); // Wait indefinitely until a user interacts
+
+
+
     return(0);
 }

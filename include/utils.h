@@ -71,5 +71,9 @@ void rad2deg(cv::Mat x);
  */
 void parseOBJFile(const std::string &fName, std::vector<cv::Point3f> &vertices, std::vector<cv::Point3f> &normals, std::vector<std::vector<int>> &faceVertices);
 
+int overlayCorners(cv::Mat cameraMatrix, cv::Mat distCoeffs, cv::Vec3d rvec, cv::Vec3d tvec, cv::Mat &frame);
+
+int overlayObject(cv::Mat& cameraMatrix, cv::Mat& distCoeffs, cv::Vec3d& rvec, cv::Vec3d& tvec, std::vector<cv::Point3f>& objectVertices, std::vector<std::vector<int>>& objectFaces, cv::Mat& frame);
+int OverlayObjectOnChessboardCenterScaled(const cv::Mat& cameraMatrix, const cv::Mat& distCoeffs, const cv::Vec3d& rvec, cv::Vec3d& tvec, std::vector<cv::Point3f>& objectVertices, const std::vector<std::vector<int>>& objectFaces, cv::Mat& frame, const int numSquaresX, const int numSquaresY, const float squareSize);
 
 #endif //PROJECT4_UTILS_H
